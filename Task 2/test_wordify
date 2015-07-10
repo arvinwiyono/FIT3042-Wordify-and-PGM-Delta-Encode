@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Encode
+perl wordify.pl < HiddenTreasures.txt > HiddenTreasures_encoded
+perl wordify.pl < dickens.txt > dickens_encoded
+perl wordify.pl < lennagrey.pgm > lennagrey_encoded
+
+# Decode
+perl de-wordify.pl < HiddenTreasures_encoded > HiddenTreasures_original
+perl de-wordify.pl < dickens_encoded > dickens_original
+perl de-wordify.pl < lennagrey_encoded > lennagrey_original.pgm
+
+# Compare
+diff HiddenTreasures.txt HiddenTreasures_original
+diff dickens.txt dickens_original
+diff lennagrey.pgm lennagrey_original.pgm
+
+#Rerank with adaptive_re-rank -swap2front
+perl adaptive_re-rank.pl -swap2front < HiddenTreasures_encoded > HiddenTreasures_reranked
+perl adaptive_re-rank.pl -swap2front < dickens_encoded > dickens_reranked
+perl adaptive_re-rank.pl -swap2front < lennagrey_encoded > lennagrey_reranked
+
+# Compress the reranked file
+./rice_compression < HiddenTreasures_reranked > HiddenTreasures_compressed
+./rice_compression < dickens_reranked > dickens_compressed
+./rice_compression < lennagrey_reranked > lennagrey_compressed

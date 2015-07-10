@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Encode
+perl wordify.pl < HiddenTreasures.txt > encoded_no_cache
+
+# Decode
+perl de-wordify.pl < encoded_no_cache > original
+
+# Compare
+diff HiddenTreasures.txt original
+
+#Rerank with adaptive_rerank -swap2front
+perl adaptive_re-rank.pl -swap2front < encoded_no_cache > reranked_no_cache
+
+#Compress with rice coding
+./rice_compression < reranked_no_cache > compressed_no_cache

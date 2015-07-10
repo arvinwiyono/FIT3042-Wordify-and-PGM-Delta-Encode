@@ -1,0 +1,16 @@
+#!/bin/bash
+
+perl adaptive_re-rank.pl -swap_next < gutenberg.txt > rerankedswapnext_gutenberg
+perl adaptive_re-rank.pl -swap_next < dickens.txt > rerankedswapnext_dickens
+
+# Derank with perl script
+perl adaptive_de-rank.pl -swap2front < rerankedswapnext_gutenberg > derankedwithperl_gutenberg
+perl adaptive_de-rank.pl -swap2front < rerankedswapnext_dickens > derankedwithperl_dickens
+
+# Derank with C program from assignment 1
+./adaptive_de-rank_c -swap2front < rerankedswapnext_gutenberg > derankedwithc_gutenberg
+./adaptive_de-rank_c -swap2front < rerankedswapnext_dickens > derankedwithc_dickens
+
+#Compare
+diff derankedwithperl_gutenberg derankedwithc_gutenberg
+diff derankedwithperl_dickens derankedwithc_dickens

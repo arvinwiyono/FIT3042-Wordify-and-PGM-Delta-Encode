@@ -1,0 +1,24 @@
+#!/bin/bash
+
+perl delta_encode_image.pl lennagrey.pgm
+perl delta_encode_image.pl shapes.pgm
+perl delta_encode_image.pl mandrillgrey.pgm
+
+# This should produce error since maximum byte value is > 255
+perl delta_encode_image.pl ref12q5-0.pgm
+
+# Reranked using adaptive re-rank and swap2front algorithm
+perl adaptive_re-rank.pl -swap2front < lennagrey.pgm.delta > lennagrey_reranked
+perl adaptive_re-rank.pl -swap2front < shapes.pgm.delta > shapes_reranked
+perl adaptive_re-rank.pl -swap2front < mandrillgrey.pgm.delta > mandrillgrey_reranked
+
+# Compress delta files with rice_compression
+# This compresses reranked delta file
+./rice_compression < lennagrey_reranked > compressed_lennagrey_reranked
+./rice_compression < shapes_reranked > compressed_shapes_reranked
+./rice_compression < mandrillgrey_reranked > compressed_mandrillgrey_reranked
+
+# This compresses original delta file
+./rice_compression < lennagrey.pgm.delta > compressed_lennagrey_norerank
+./rice_compression < shapes.pgm.delta > compressed_shapes_norerank
+./rice_compression < mandrillgrey.pgm.delta > compressed_mandrillgrey_norerank

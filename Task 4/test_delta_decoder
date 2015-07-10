@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#NOTE: THIS MUST BE EXECUTED AFTER EXECUTING "test_delta_encoder" SCRIPT
+
+perl delta_decode_image.pl lennagrey.pgm.delta
+perl delta_decode_image.pl shapes.pgm.delta
+perl delta_decode_image.pl mandrillgrey.pgm.delta
