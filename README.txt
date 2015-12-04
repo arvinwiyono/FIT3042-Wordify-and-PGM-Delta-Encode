@@ -1,8 +1,6 @@
 
-###################################################
-#         FIT3042 - ASSIGNMENT 2		  #
-#   Simple Text and Image Compression Using Perl  #
-###################################################
+*FIT3042 - ASSIGNMENT 2*
+*Simple Text and Image Compression Using Perl *
 
 STUDENT NAME	: ARVIN WIYONO
 STUDENT ID	: 24282588
